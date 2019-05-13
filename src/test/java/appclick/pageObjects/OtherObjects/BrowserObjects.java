@@ -2,14 +2,21 @@ package appclick.pageObjects.OtherObjects;
 
 import appclick.pageObjects.PageObject;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+import static io.appium.java_client.touch.LongPressOptions.longPressOptions;
+import static io.appium.java_client.touch.offset.ElementOption.element;
 
 public class BrowserObjects extends PageObject {
 
@@ -32,8 +39,9 @@ public class BrowserObjects extends PageObject {
     @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[3]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.Button[2]")
     private AndroidElement okButton2;
 
-    @AndroidFindBy(xpath = "//android.widget.Button[@resource-id='com.android.chrome:id/snackbar_button']")
+    @AndroidFindBy(xpath = "//android.widget.TextView[starts-with(@text,'GooGames') and contains(@text,'Открыть')]")
     private AndroidElement openButton;
+    ////android.widget.TextView[@resource-id='com.android.chrome:id/infobar_message' and contains(.,'Открыть')]
 
 /*    @FindBy(xpath = "//*[contains(text(),'СКАЧАТЬ')]")
     private WebElement downloadButton;*/
@@ -68,6 +76,11 @@ public class BrowserObjects extends PageObject {
     public void pressOkButton() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOf(okButton2)).click();
         Thread.sleep(3000);
-        longWait.until(ExpectedConditions.visibilityOf(openButton)).click();
+    }
+    public void pressOpenButton(AppiumDriver<WebElement> browserDriver) {
+        longWait.until(ExpectedConditions.visibilityOf(openButton));
+        //new TouchAction(browserDriver).longPress(longPressOptions().withElement(element(openButton)).withDuration(Duration.ofMillis(1000))).release().perform();
+        new TouchAction<>(browserDriver).tap(PointOption.point(openButton.getLocation().getX(),openButton.getLocation().getY())).perform();
+       // openButton.click();
     }
 }

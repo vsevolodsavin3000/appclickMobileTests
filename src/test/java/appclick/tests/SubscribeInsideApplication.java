@@ -18,7 +18,7 @@ public class SubscribeInsideApplication {
     protected static AppiumDriver<AndroidElement> GGdriver;
 
 
-    public void subscribeGoogames() throws InterruptedException, IOException {
+    public void subscribeGoogames(String currentOperator) throws InterruptedException, IOException {
         ProcessExecutor processExecutor = new ProcessExecutor();
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.APPIUM_VERSION, "1.9.1");
@@ -45,6 +45,7 @@ public class SubscribeInsideApplication {
             if(googames.checkIfAlreadySubscribed()){
                 fail("УЖЕ БЫЛ ПОДПИСАН");
             }
+            GGdriver.navigate().back();
             googames.pressCategoryButton();
             googames.pressOstrosujetnieButton();
             googames.pressFirstGameButton();
@@ -52,7 +53,15 @@ public class SubscribeInsideApplication {
             //Dimension windowSize = GGdriver.manage().window().getSize();
             //Thread.sleep(40000);
             //new TouchAction<>(GGdriver).tap(PointOption.point(windowSize.width/2,windowSize.height/3)).perform();
-            googames.pressStartPlayingButton();
+            if (currentOperator.contains("MTS")||currentOperator.contains("Beeline")||currentOperator.contains("Tele2")) {
+                googames.pressStartPlayingButton();
+            }
+            else{
+                if(googames.checkAskingForBankCardIfNotSupportedOperatorOrNoSim()){
+                    //спросил банковскую карту если не поддерживается оператор или нет сим карты
+                }
+                else fail("DID NOT ASK BANK CARD(unsupported operator or no sim)");
+            }
             Thread.sleep(10000);
             //1280-  720-
         }

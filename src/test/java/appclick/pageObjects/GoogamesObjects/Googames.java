@@ -41,6 +41,9 @@ public class Googames extends PageObject {
     ///hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.FrameLayout/android.support.v7.widget.RecyclerView/android.support.v7.widget.LinearLayoutCompat[1]/android.widget.CheckedTextView
     private AndroidElement joinClubButton;
 
+    @AndroidFindBy(xpath = "//android.view.View[@text='Номер карты']")
+    private AndroidElement askForBankCard;
+
     public Googames(AppiumDriver<?> driver) {
         super(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
@@ -82,6 +85,10 @@ public class Googames extends PageObject {
 
     public AndroidElement getNavigationMenuButton() { return navigationMenuButton; }
 
+    public AndroidElement getJoinClubButton() { return joinClubButton;}
+
+    public AndroidElement getAskForBankCard() { return askForBankCard; }
+
     public void pressCategoryButton(){
         wait.until(ExpectedConditions.visibilityOf(getCategoryButton())).click();
     }
@@ -106,15 +113,28 @@ public class Googames extends PageObject {
         wait.until(ExpectedConditions.visibilityOf(getNavigationMenuButton())).click();
         try{
             //Thread.sleep(5000);
-            System.out.println(getJoinClubButton().getText());
-            smallWait.until(ExpectedConditions.elementToBeClickable(getJoinClubButton()));
-            return false;
+            String joinClubText = getJoinClubButton().getText();
+            System.out.println(joinClubText);
+            if (joinClubText.equals("Вступить в клуб")||joinClubText.equals("Join a club")){
+                return false;
+            }
+            else return true;
+            //smallWait.until(ExpectedConditions.elementToBeClickable(getJoinClubButton())); хз почему не работает!!!
         }
         catch (Exception e){
             System.out.println(e);
             return true;
         }
     }
+    public boolean checkAskingForBankCardIfNotSupportedOperatorOrNoSim(){
+        try {
+            wait.until(ExpectedConditions.visibilityOf(getAskForBankCard()));
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
 
-    public AndroidElement getJoinClubButton() { return joinClubButton;}
+    }
+
 }

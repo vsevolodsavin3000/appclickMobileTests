@@ -10,15 +10,23 @@ public class SMSObjects extends PageObject {
 
     @AndroidFindBy (xpath = "//android.widget.TextView[contains(@text,'МТС')]")
     private AndroidElement titleFromMTS;
+
+    @AndroidFindBy (xpath = "//android.widget.TextView[contains(@text,'GooGames']")
+    private AndroidElement smsTextFromMTS;
 ////a[contains(@href,'logout.aspx')]
     @AndroidFindBy (xpath = "//android.widget.TextView[contains(@text,'1126')]")
     private AndroidElement titleFromBeeline;
 
-    @AndroidFindBy (xpath = "//android.widget.TextView[contains(@text,'МКС')]")
+    @AndroidFindBy (xpath = "//android.widget.TextView[contains(@text,'stop8')]")
     private AndroidElement smsTextFromBeeline;
 
-    @AndroidFindBy (xpath = "//android.widget.TextView[contains(@text,'Googames']")
-    private AndroidElement smsTextFromMTS;
+    @AndroidFindBy (xpath = "//android.widget.TextView[contains(@text,'9427')]")
+    private AndroidElement titleFromTele2;
+
+    @AndroidFindBy (xpath = "//android.widget.TextView[contains(@text,'на услугу Игровой клуб GooGames']")
+    private AndroidElement smsTextFromTele2;
+
+
 
     public SMSObjects(AppiumDriver driver) {
         super(driver);
@@ -32,9 +40,9 @@ public class SMSObjects extends PageObject {
         return getSMSTextDependingOnOperator(titleFromBeeline,smsTextFromBeeline);
     }
     else if (currentOperator.contains("Tele2")){
-        return null;
+        return getSMSTextDependingOnOperator(titleFromTele2,smsTextFromTele2);
     }
-    else{return null;}
+    else return null;
     }
 
     public String getSMSTextDependingOnOperator(AndroidElement title,AndroidElement smsText){

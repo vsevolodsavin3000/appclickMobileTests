@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CheckSMS {
     protected static AppiumDriver<AndroidElement> driver;
 
-    public String checkSMS() throws InterruptedException, IOException {
+    public String checkSMS(String currentOperator) throws InterruptedException, IOException {
         ProcessExecutor processExecutor = new ProcessExecutor();
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.APPIUM_VERSION, "1.9.1");
@@ -37,7 +37,6 @@ public class CheckSMS {
         driver = new AppiumDriver<>(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
-        String currentOperator = processExecutor.getOperator();
         SMSObjects smsObjects = new SMSObjects(driver);
         String smsText = smsObjects.getSMSText(currentOperator);
         driver.quit();

@@ -22,7 +22,7 @@ public class PageObject {
     public PageObject(AndroidDriver driver){
         this.driver = driver;
         wait = new WebDriverWait(driver,30,500);
-        longWait = new WebDriverWait(driver,120,1000);
+        longWait = new WebDriverWait(driver,300,1000);
         smallWait = new WebDriverWait(driver,3,200);
         windows= new ArrayList<String>();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
