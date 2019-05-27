@@ -30,7 +30,7 @@ public class MiscObjects extends PageObject {
 
     public void initInstall() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOf(installButton)).click();
-        Thread.sleep(15000);
+        Thread.sleep(3000);
         longWait.until(ExpectedConditions.visibilityOf(launchButton));
     }
 }

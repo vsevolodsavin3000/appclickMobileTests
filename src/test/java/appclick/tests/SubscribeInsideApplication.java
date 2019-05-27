@@ -54,7 +54,12 @@ public class SubscribeInsideApplication {
             //Thread.sleep(40000);
             //new TouchAction<>(GGdriver).tap(PointOption.point(windowSize.width/2,windowSize.height/3)).perform();
             if (currentOperator.contains("MTS")||currentOperator.contains("Beeline")||currentOperator.contains("Tele2")) {
-                googames.pressStartPlayingButton();
+                try {
+                    googames.pressStartPlayingButton();
+                }
+                catch (Exception e){
+                    fail("Land didn't open within 1 minute   "+e);
+                }
             }
             else{
                 if(googames.checkAskingForBankCardIfNotSupportedOperatorOrNoSim()){
@@ -67,6 +72,7 @@ public class SubscribeInsideApplication {
         }
         catch (Exception e){
             System.out.println(e);
+            fail("Something gone wrong");
         }
         finally {
             GGdriver.removeApp("se.appland.appclick_publisher");

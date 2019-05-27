@@ -5,6 +5,7 @@ import appclick.pageObjects.OtherObjects.SMSObjects;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.IOException;
@@ -13,8 +14,9 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CheckSMS {
+public class CheckSMS{
     protected static AppiumDriver<AndroidElement> driver;
+
 
     public String checkSMS(String currentOperator) throws InterruptedException, IOException {
         ProcessExecutor processExecutor = new ProcessExecutor();
@@ -43,5 +45,5 @@ public class CheckSMS {
         System.out.println(smsText);
         return smsText;
     }
-  //  public static void main(String args[]) throws IOException, InterruptedException {new CheckSMS().checkSMS();}
+    public static void main(String args[]) throws IOException, InterruptedException {new CheckSMS().checkSMS("MTS");}
 }

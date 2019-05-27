@@ -106,7 +106,7 @@ public class Googames extends PageObject {
     }
 
     public void pressStartPlayingButton(){
-        longWait.until(ExpectedConditions.visibilityOf(getStartPlayingButton())).click();
+        wait.until(ExpectedConditions.visibilityOf(getStartPlayingButton())).click();
     }
 
     public boolean checkIfAlreadySubscribed(){

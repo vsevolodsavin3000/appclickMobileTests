@@ -21,7 +21,7 @@ public class PageObject {
 
     public PageObject(AndroidDriver driver){
         this.driver = driver;
-        wait = new WebDriverWait(driver,30,500);
+        wait = new WebDriverWait(driver,60,500);
         longWait = new WebDriverWait(driver,300,1000);
         smallWait = new WebDriverWait(driver,3,200);
         windows= new ArrayList<String>();
