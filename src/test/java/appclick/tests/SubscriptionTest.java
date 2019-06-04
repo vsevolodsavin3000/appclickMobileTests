@@ -12,15 +12,15 @@ import org.openqa.selenium.WebElement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.IOException;
 
 public class SubscriptionTest extends FunctionalTest {
 
-
     @Test
     @DisplayName("Install googames by given link and subscribe")
-    public void downloadGoogamesByLink() throws IOException, InterruptedException {
+    public void subscription() throws IOException, InterruptedException {
         BrowserObjects browserObjects = new BrowserObjects((AppiumDriver<WebElement>) browserDriver);
         //printContextHandlesAndCurrentActivity();
         browserDriver.context("NATIVE_APP");
@@ -49,19 +49,21 @@ public class SubscriptionTest extends FunctionalTest {
         CheckSMS checkSMS = new CheckSMS();
         String smsText = checkSMS.checkSMS(currentOperator);
         if (currentOperator.contains("MTS")) {
-            assertEquals("Уважаемый клиент, мы обратили внимание, что вы подключили контентную услугу «Игровой клуб GooGames». Стоимость услуги  10 руб./1 день. Мы заботимся о вас и напоминаем, что управлять контентными услугами вы можете в приложении «Мой МТС» в разделе Услуги mts.ru/app или набрав *152#вызов. \n" +
-                    "С заботой, ваш МТС\n", smsText);
+            assumeTrue(smsText.equals("Уважаемый клиент, мы обратили внимание, что вы подключили контентную услугу «Игровой клуб GooGames». Стоимость услуги  10 руб./1 день. Мы заботимся о вас и напоминаем, что управлять контентными услугами вы можете в приложении «Мой МТС» в разделе Услуги mts.ru/app или набрав *152#вызов. \n" +
+                    "С заботой, ваш МТС\n"));
         }
         else if(currentOperator.contains("Beeline")){
-            assertEquals("Вы активировали подписку на номере 1126, абон. плата 10.01 руб. за 1 день. Сервис предоставляет ООО \"МКС\", 8-800-100-54-10,   help@group-mks.ru. Для отключения услуги отправьте бесплатно stop8 на 1126. Активными подписками управляйте online в Личном кабинете www.beeline.ru/login", smsText);
+            assumeTrue(smsText.equals("Вы активировали подписку на номере 1126, абон. плата 10.01 руб. за 1 день. Сервис предоставляет ООО \"МКС\", 8-800-100-54-10,   help@group-mks.ru. Для отключения услуги отправьте бесплатно stop7 на 1126. Активными подписками управляйте online в Личном кабинете www.beeline.ru/login"));
         }
         else if(currentOperator.contains("Tele2")){
-            assertEquals("Вы успешно подписались на услугу Игровой клуб GooGames. Cтоимость подключения 0 руб., абон.плата 10 руб. за 1 дн., с НДС. Провайдер ООО \"МКС\". Для отписки СТОП на номер 9427.",smsText);
+            assumeTrue(smsText.equals("Вы успешно подписались на услугу Игровой клуб GooGames. Cтоимость подключения 0 руб., абон.плата 10 руб. за 1 дн., с НДС. Провайдер ООО \"МКС\". Для отписки СТОП на номер 9427."));
         }
         else if(currentOperator == null){
             fail("No SIM");
         }
         else{fail("Not supported mobile operator");}
+        UnsubscriptionTest unsubscriptionTest = new UnsubscriptionTest();
+        unsubscriptionTest.unsubscription(currentOperator);
     }
 
 /*    public void printContextHandlesAndCurrentActivity(){
